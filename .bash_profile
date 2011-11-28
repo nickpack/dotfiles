@@ -9,6 +9,7 @@ HISTCONTROL=ignoreboth
 shopt -s histappend
 shopt -s checkwinsize
 
+alias pushheroku="git push heroku HEAD:master"
 alias ding='growl "Done!"'
 alias cwd='pwd | pbcopy'
 alias randpass="openssl rand -base64 12"
