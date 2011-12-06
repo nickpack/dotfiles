@@ -2,6 +2,8 @@ export EDITOR='vi'
 export SVN_EDITOR='vi'
 export VISUAL='vi'
 export CLICOLOR=1
+export NODE_PATH='/usr/local/lib/node_modules'
+export PATH="/usr/local/share/npm/bin:$PATH"
 
 HISTCONTROL=$HISTCONTROL${HISTCONTROL+,}ignoredups
 HISTCONTROL=ignoreboth
