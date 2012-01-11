@@ -3,14 +3,17 @@ export SVN_EDITOR='vi'
 export VISUAL='vi'
 export CLICOLOR=1
 export NODE_PATH='/usr/local/lib/node_modules'
-export PATH="/usr/local/share/npm/bin:$PATH"
+export PATH="/usr/local/sbin:/usr/local/share/npm/bin:$PATH"
+export CROSS_COMPILE='/usr/local/Cellar/android-ndk/r7/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/arm-linux-androideabi-'
 
-HISTCONTROL=$HISTCONTROL${HISTCONTROL+,}ignoredups
+function iDroidEnv { hdiutil attach ~/iDroid/ics.dmg -mountpoint /Volumes/android; cd /Volumes/android; . build/envsetup.sh; }
+
 HISTCONTROL=ignoreboth
 
 shopt -s histappend
 shopt -s checkwinsize
 
+alias startmongo='nohup mongod run --config /usr/local/Cellar/mongodb/2.0.2-x86_64/mongod.conf &'
 alias pushheroku="git push heroku HEAD:master"
 alias ding='growl "Done!"'
 alias cwd='pwd | pbcopy'
@@ -31,7 +34,9 @@ alias cd.='cd `pwd -LP`'
 alias su-='su -'
 alias get-current-branch="git branch 2>/dev/null | grep '^*' | colrm 1 2"
 alias get-current-color="if [[ \$(get-current-branch) == \"master\" ]] ; then echo \"1;33m\" ; else echo \"0;32m\" ; fi"
- 
+alias dotson='shopt -s dotglob'
+alias dotsoff='shopt -u dotglob'
+
 if [ -f ~/.cdpath ]; then
   cd "$(cat ~/.cdpath)"
 fi
