@@ -1,23 +1,36 @@
+if [ -f ~/.bashrc ]; then
+    source ~/.bashrc
+fi
+
+# Set some sensible defaults
 export EDITOR='vi'
 export SVN_EDITOR='vi'
 export VISUAL='vi'
 export CLICOLOR=1
 export NODE_PATH='/usr/local/lib/node_modules'
 export PATH="/usr/local/sbin:/usr/local/share/npm/bin:$PATH"
-export CROSS_COMPILE='/usr/local/Cellar/android-ndk/r7/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/arm-linux-androideabi-'
-
-function iDroidEnv { hdiutil attach ~/iDroid/ics.dmg -mountpoint /Volumes/android; cd /Volumes/android; . build/envsetup.sh; }
-
-HISTCONTROL=ignoreboth
-
+export HISTCONTROL=ignoreboth
+export HISTSIZE=1000
 shopt -s histappend
 shopt -s checkwinsize
 
+
+# These probably arent massively useful unless you are an android/linux dev on OSX
+# I build ARM binaries a lot!
+export CROSS_COMPILE='/usr/local/Cellar/android-ndk/r7/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/arm-linux-androideabi-'
+function iDroidEnv { hdiutil attach ~/iDroid/ics.dmg -mountpoint /Volumes/android; cd /Volumes/android; . build/envsetup.sh; }
+
+# Lazyness FTW
+alias startpg9='/usr/local/Cellar/postgresql/9.0.4/bin/pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start'
 alias startmongo='nohup mongod run --config /usr/local/Cellar/mongodb/2.0.2-x86_64/mongod.conf &'
+alias herokuoff='heroku maintenance:on'
+alias herokuon='heroku maintenance:off'
 alias pushheroku="git push heroku HEAD:master"
 alias ding='growl "Done!"'
 alias cwd='pwd | pbcopy'
 alias randpass="openssl rand -base64 12"
+
+# DVCS lazyness
 alias gs='git status'
 alias g='git'
 alias gb='git checkout -b'
@@ -27,20 +40,26 @@ alias gd='git diff | $EDITOR'
 alias ga='git add'
 alias gl='git log'
 alias st='svn status | grep -v "^X      " | grep -v "^Performing status on external item"'
+alias get-current-branch="git branch 2>/dev/null | grep '^*' | colrm 1 2"
+alias get-current-color="if [[ \$(get-current-branch) == \"master\" ]] ; then echo \"1;33m\" ; else echo \"0;32m\" ; fi"
+
+# common command adjustments/common typos
 alias cp='cp -i -v'
 alias rm='rm -i'
 alias cd..='cd ..'
 alias cd.='cd `pwd -LP`'
 alias su-='su -'
-alias get-current-branch="git branch 2>/dev/null | grep '^*' | colrm 1 2"
-alias get-current-color="if [[ \$(get-current-branch) == \"master\" ]] ; then echo \"1;33m\" ; else echo \"0;32m\" ; fi"
+
+# Sometimes canhaz dotfiles for common operations
 alias dotson='shopt -s dotglob'
 alias dotsoff='shopt -u dotglob'
 
+# Remember where I was last kthx
 if [ -f ~/.cdpath ]; then
   cd "$(cat ~/.cdpath)"
 fi
 
+# Dir and file colours pl0x
 LS_COLORS="no=00:fi=00:di=01;34:ln=01;36:pi=40;33:so=01;35:do=01;35\
     :bd=40;33;01:cd=40;33;01:or=40;31;01:ex=01;32:*.tar=01;31:*.tgz=01;31\
     :*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31\
@@ -61,8 +80,10 @@ LS_COLORS="$LS_COLORS\
 
 export LS_COLORS
 
+# I r english, canhaz GB locale kthx
 [ -z "$LANG" ] && export LANG="en_GB.UTF8"
 
+# Show me directory contents when I change directories
 cd() {
   if [ -n "$1" ]; then
     builtin cd "$@" && ls
@@ -71,6 +92,7 @@ cd() {
   fi
 }
 
+# Integer representation of domain registration status
 domain() {
   # see http://troy.yort.com/short-fast-micro-whois
   result=`dig -t NS "$1" | grep -c "ANSWER SECTION"`
@@ -137,4 +159,5 @@ function pathed_cd () {
 }
 alias cd="pathed_cd"
 
+# Prompt with branch and colours
 export PS1="\[\033[1;30m\]\\u@\h \[\033[0;37m\]\\W:\[\033[\$(get-current-color)\]\$(parse_svn_branch)\$(get-current-branch)\\[\033[0m\]\$ "
