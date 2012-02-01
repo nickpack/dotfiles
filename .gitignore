@@ -1,0 +1,37 @@
+# XCode
+*.mode1v3
+*.pbxuser
+*.perspective 
+*.perspectivev3
+*~.nib/
+build/*
+
+# Textmate
+*.tm_build_errors
+
+# SVN
+.svn
+
+# OSX
+.DS_Store
+profile
+
+# Python
+*.pyc
+venv
+
+# Local DB for django apps
+local.sqlite
+
+# IntelliJ IDEA
+.idea
+
+# Compiler output/Misc binaries
+*.o
+*.o.*
+*.i
+*.symtypes
+*.order
+*.elf
+*.bin
+*.dump

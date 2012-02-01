@@ -14,11 +14,12 @@ export HISTSIZE=1000
 shopt -s histappend
 shopt -s checkwinsize
 
+# Stupidly high number of file descriptors (mainly for ab)
+ulimit -n 10000
 
 # These probably arent massively useful unless you are an android/linux dev on OSX
 # I build ARM binaries a lot!
-export CROSS_COMPILE='/usr/local/Cellar/android-ndk/r7/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/arm-linux-androideabi-'
-function iDroidEnv { hdiutil attach ~/iDroid/ics.dmg -mountpoint /Volumes/android; cd /Volumes/android; . build/envsetup.sh; }
+function iDroidEnv { hdiutil attach ~/iDroid/ics.dmg -mountpoint /Volumes/android; cd /Volumes/android; . build/envsetup.sh; export CROSS_COMPILE='/usr/local/Cellar/android-ndk/r7/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/arm-linux-androideabi-'; export ARCH='arm'; }
 
 # Lazyness FTW
 alias startpg9='/usr/local/Cellar/postgresql/9.0.4/bin/pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start'
