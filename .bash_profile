@@ -8,7 +8,7 @@ export SVN_EDITOR='vi'
 export VISUAL='vi'
 export CLICOLOR=1
 export NODE_PATH='/usr/local/lib/node_modules'
-export PATH="/usr/local/sbin:/usr/local/share/npm/bin:$PATH"
+export PATH="/usr/local/bin:/usr/local/sbin:/usr/local/share/npm/bin:$PATH"
 export HISTCONTROL=ignoreboth
 export HISTSIZE=1000
 shopt -s histappend
@@ -20,6 +20,8 @@ ulimit -n 10000
 # These probably arent massively useful unless you are an android/linux dev on OSX
 # I build ARM binaries a lot!
 function iDroidEnv { hdiutil attach ~/iDroid/ics.dmg -mountpoint /Volumes/android; cd /Volumes/android; . build/envsetup.sh; export CROSS_COMPILE='/usr/local/Cellar/android-ndk/r7/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/arm-linux-androideabi-'; export ARCH='arm'; }
+
+alias dropbox2='HOME=~/iDroid /Applications/Dropbox.app/Contents/MacOS/Dropbox'
 
 # Lazyness FTW
 alias startpg9='/usr/local/Cellar/postgresql/9.0.4/bin/pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start'
@@ -40,12 +42,12 @@ alias gca='git commit -v -a'
 alias gd='git diff | $EDITOR'
 alias ga='git add'
 alias gl='git log'
+alias gpr='git pull --rebase'
 alias st='svn status | grep -v "^X      " | grep -v "^Performing status on external item"'
 alias get-current-branch="git branch 2>/dev/null | grep '^*' | colrm 1 2"
 alias get-current-color="if [[ \$(get-current-branch) == \"master\" ]] ; then echo \"1;33m\" ; else echo \"0;32m\" ; fi"
 
 # common command adjustments/common typos
-alias cp='cp -i -v'
 alias rm='rm -i'
 alias cd..='cd ..'
 alias cd.='cd `pwd -LP`'
