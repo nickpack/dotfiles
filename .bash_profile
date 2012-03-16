@@ -1,3 +1,4 @@
+# Remove this if you arent using OSX otherwise you'll end up with recursion ;)
 if [ -f ~/.bashrc ]; then
     source ~/.bashrc
 fi
@@ -23,12 +24,16 @@ function iDroidEnv { hdiutil attach ~/iDroid/ics.dmg -mountpoint /Volumes/androi
 
 alias dropbox2='HOME=~/iDroid /Applications/Dropbox.app/Contents/MacOS/Dropbox'
 
-# Lazyness FTW
+# Hipster Shit
 alias startpg9='/usr/local/Cellar/postgresql/9.0.4/bin/pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start'
 alias startmongo='nohup mongod run --config /usr/local/Cellar/mongodb/2.0.2-x86_64/mongod.conf &'
+alias startredis='redis-server /usr/local/etc/redis.conf'
 alias herokuoff='heroku maintenance:on'
 alias herokuon='heroku maintenance:off'
-alias pushheroku="git push heroku HEAD:master"
+alias pushheroku='git push heroku HEAD:master'
+alias herokudbbackup='heroku pgbackups:capture --expire'
+
+# Misc
 alias ding='growl "Done!"'
 alias cwd='pwd | pbcopy'
 alias randpass="openssl rand -base64 12"
@@ -164,3 +169,5 @@ alias cd="pathed_cd"
 
 # Prompt with branch and colours
 export PS1="\[\033[1;30m\]\\u@\h \[\033[0;37m\]\\W:\[\033[\$(get-current-color)\]\$(parse_svn_branch)\$(get-current-branch)\\[\033[0m\]\$ "
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
