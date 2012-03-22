@@ -25,13 +25,15 @@ function iDroidEnv { hdiutil attach ~/iDroid/ics.dmg -mountpoint /Volumes/androi
 alias dropbox2='HOME=~/iDroid /Applications/Dropbox.app/Contents/MacOS/Dropbox'
 
 # Hipster Shit
-alias startpg9='/usr/local/Cellar/postgresql/9.0.4/bin/pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start'
+alias startpg9='/usr/local/Cellar/postgresql/9.1.2/bin/pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start'
 alias startmongo='nohup mongod run --config /usr/local/Cellar/mongodb/2.0.2-x86_64/mongod.conf &'
 alias startredis='redis-server /usr/local/etc/redis.conf'
+alias redistogo='redis-cli -h cod.redistogo.com -p 9884 -a'
 alias herokuoff='heroku maintenance:on'
 alias herokuon='heroku maintenance:off'
 alias pushheroku='git push heroku HEAD:master'
 alias herokudbbackup='heroku pgbackups:capture --expire'
+alias pyenv='source venv/bin/activate'
 
 # Misc
 alias ding='growl "Done!"'
