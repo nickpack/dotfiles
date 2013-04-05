@@ -8,10 +8,12 @@ export EDITOR='vi'
 export SVN_EDITOR='vi'
 export VISUAL='vi'
 export CLICOLOR=1
+export ANDROID_SDK_ROOT='/usr/local/opt/android-sdk'
 export NODE_PATH='/usr/local/lib/node_modules'
-export PATH="/usr/local/bin:/usr/local/sbin:/usr/local/share/npm/bin:$PATH"
-export HISTCONTROL=ignoreboth
-export HISTSIZE=1000
+export PATH="/usr/local/bin:/usr/local/sbin:/usr/local/share/npm/bin:/usr/local/share/python:/usr/local/heroku/bin:$PATH"
+export HISTCONTROL="erasedups"
+export HISTSIZE=5000
+export HISTIGNORE=ls:ll:"ls -altr":"ls -alt":la:l:pwd:exit:mc:su:df:clear:ps:"ps aux":h:history:"ls -al"
 shopt -s histappend
 shopt -s checkwinsize
 
@@ -25,8 +27,8 @@ function iDroidEnv { hdiutil attach ~/iDroid/ics.dmg -mountpoint /Volumes/androi
 alias dropbox2='HOME=~/iDroid /Applications/Dropbox.app/Contents/MacOS/Dropbox'
 
 # Hipster Shit
-alias startpg9='/usr/local/Cellar/postgresql/9.1.2/bin/pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start'
-alias startmongo='nohup mongod run --config /usr/local/Cellar/mongodb/2.0.2-x86_64/mongod.conf &'
+alias startpg9='pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start'
+alias startmongo='nohup mongod run --config /usr/local/etc/mongod.conf &'
 alias startredis='redis-server /usr/local/etc/redis.conf'
 alias redistogo='redis-cli -h cod.redistogo.com -p 9884 -a'
 alias herokuoff='heroku maintenance:on'
@@ -34,6 +36,8 @@ alias herokuon='heroku maintenance:off'
 alias pushheroku='git push heroku HEAD:master'
 alias herokudbbackup='heroku pgbackups:capture --expire'
 alias pyenv='source venv/bin/activate'
+alias vagvm='vagrant up --provider=vmware_fusion'
+alias gw='grunt watch'
 
 # Misc
 alias ding='growl "Done!"'
@@ -59,6 +63,7 @@ alias rm='rm -i'
 alias cd..='cd ..'
 alias cd.='cd `pwd -LP`'
 alias su-='su -'
+alias gunt='grunt'
 
 # Sometimes canhaz dotfiles for common operations
 alias dotson='shopt -s dotglob'
@@ -165,6 +170,7 @@ function pathed_cd () {
     else
         cd "$1"
     fi
+    rm -f ~/.cdpath
     pwd > ~/.cdpath
 }
 alias cd="pathed_cd"
