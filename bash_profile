@@ -135,5 +135,8 @@ function pathed_cd () {
 }
 alias cd="pathed_cd"
 
+alias get-current-branch="git branch 2>/dev/null | grep '^*' | colrm 1 2"
+alias get-current-color="if [[ \$(get-current-branch) == \"master\" ]] ; then echo \"1;33m\" ; else echo \"0;32m\" ; fi"
+
 # Prompt with branch and colours
 export PS1="\[\033[1;30m\]\\u@\h \[\033[0;37m\]\\W:\[\033[\$(get-current-color)\]\$(parse_svn_branch)\$(get-current-branch)\\[\033[0m\]\$ "
