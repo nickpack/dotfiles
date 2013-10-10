@@ -1,7 +1,7 @@
 # XCode
 *.mode1v3
 *.pbxuser
-*.perspective 
+*.perspective
 *.perspectivev3
 *~.nib/
 build/*
@@ -35,3 +35,8 @@ local.sqlite
 *.elf
 *.bin
 *.dump
+
+# Web/Misc
+.idea
+.sass-cache
+*.swp
