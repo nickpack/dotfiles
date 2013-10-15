@@ -1,0 +1,6 @@
+csslint
+jshint
+bower
+grunt-cli
+imageoptim-cli
+nodemon

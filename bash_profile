@@ -9,7 +9,7 @@ export GOPATH="/Users/nickp666/go"
 export PATH="$GOPATH/bin:/usr/local/bin:/usr/local/sbin:/usr/local/share/python:/usr/local/share/npm/bin:/usr/local/heroku/bin:$PATH"
 export HISTCONTROL=ignoredups:erasedups
 export HISTSIZE=5000
-export HISTIGNORE=ls:ll:"ls -altr":"ls -alt":la:l:pwd:exit:mc:su:df:clear:ps:"ps aux":h:history:"ls -al"
+export HISTIGNORE=ls:ll:"ls -altr":"ls -alt":la:l:pwd:exit:mc:su:df:clear:ps:"ps aux":h:history:"ls -la":du
 shopt -s histappend
 shopt -s checkwinsize
 
@@ -18,7 +18,7 @@ source /usr/local/bin/virtualenvwrapper.sh
 # General stuff
 alias projects="cd ~/Projects"
 alias personal="cd ~/Personal"
-alias oss="cd ~/Personal/OSS"
+alias oss="cd ~/Projects/OSS"
 alias dropbox2='HOME=~/Personal/DropBox /Applications/Dropbox.app/Contents/MacOS/Dropbox'
 alias sublime='/Applications/Sublime Text 2.app/Contents/SharedSupport/bin/subl'
 alias killchrometabs="ps ux | grep '[C]hrome Helper --type=renderer' | grep -v extension-process | tr -s ' ' | cut -d ' ' -f2 | xargs kill"
