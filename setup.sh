@@ -12,6 +12,9 @@ install_dotfiles() {
     do
         cp -fv ./${dotshizzle} ~/.${dotshizzle}
     done
+
+    # Clearly every terminal should open with darth vader
+    sudo cp -fv motd /etc/motd
 }
 
 setup_vim() {
@@ -32,6 +35,8 @@ install_homebrew() {
     echo "Installing homebrew..."
     # Brew
     ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"
+    # Install cask for app goodness
+    brew tap phinze/homebrew-cask
 }
 
 git_config() {
@@ -43,7 +48,6 @@ git_config() {
 
 osx_general_settings() {
     echo "Adding some general sanity to OSX..."
-    sudo cp -fv motd /etc/motd
 
     sudo pmset -a standbydelay 86400
 
@@ -259,6 +263,8 @@ install_packages_from_manifest() {
     do
         if [[ "$1" == "npm" ]]; then
             $1 install -g  "$line";
+        elif [[ "$1" == "cask" ]]; then
+            brew cask install $line;
         else
             $1 install  "$line";
         fi
@@ -268,6 +274,11 @@ install_packages_from_manifest() {
 
 shopt -s dotglob;
 
+echo "Some of this stuff requires elevated rights - enter your password NAO..."
+sudo -v;
+
+while true; do sudo -n true; sleep 240; kill -0 "$$" || exit; done 2>/dev/null &
+
 install_dotfiles;
 
 setup_vim;
@@ -275,11 +286,6 @@ setup_vim;
 install_most_hated_language;
 
 git_config;
-
-echo "Some of this stuff requires elevated rights - enter your password NAO..."
-sudo -v;
-
-while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 if [[ "$OSTYPE" =~ ^darwin ]]; then
     echo "I sense something fruity...";
@@ -291,6 +297,8 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
     osx_general_app_settings;
     restart_osx_shizzle;
     install_packages_from_manifest "brew" "brewpackages";
+    export HOMEBREW_CASK_OPTS="--appdir=/Applications"
+    install_packages_from_manifest "cask" "caskapps";
     echo "Finished fruity packages and settings...";
 fi
 

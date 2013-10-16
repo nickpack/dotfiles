@@ -30,6 +30,7 @@ alias whois="whois -h whois-servers.net"
 
 # OSX Specific
 if [[ "$OSTYPE" =~ ^darwin ]]; then
+  export HOMEBREW_CASK_OPTS="--appdir=/Applications"
   alias dropbox2='HOME=~/Personal/DropBox /Applications/Dropbox.app/Contents/MacOS/Dropbox'
   alias sublime='/Applications/Sublime Text 2.app/Contents/SharedSupport/bin/subl'
   alias killchrometabs="ps ux | grep '[C]hrome Helper --type=renderer' | grep -v extension-process | tr -s ' ' | cut -d ' ' -f2 | xargs kill"
