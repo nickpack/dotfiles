@@ -2,10 +2,17 @@
 export EDITOR='vi'
 export SVN_EDITOR='vi'
 export VISUAL='vi'
+export GREP_OPTIONS="--color=auto"
 export CLICOLOR=1
 export ANDROID_SDK_ROOT='/usr/local/opt/android-sdk'
 export NODE_PATH='/usr/local/lib/node_modules'
-export GOPATH="/Users/nickp666/go"
+
+if [[ "$OSTYPE" =~ ^darwin ]]; then
+  export GOPATH="/Users/nickp666/go"
+else
+  export GOPATH="/home/nickp666/go"
+fi
+
 export PATH="$GOPATH/bin:/usr/local/bin:/usr/local/sbin:/usr/local/share/python:/usr/local/share/npm/bin:/usr/local/heroku/bin:$PATH"
 export HISTCONTROL=ignoredups:erasedups
 export HISTSIZE=5000
@@ -19,11 +26,17 @@ source /usr/local/bin/virtualenvwrapper.sh
 alias projects="cd ~/Projects"
 alias personal="cd ~/Personal"
 alias oss="cd ~/Projects/OSS"
-alias dropbox2='HOME=~/Personal/DropBox /Applications/Dropbox.app/Contents/MacOS/Dropbox'
-alias sublime='/Applications/Sublime Text 2.app/Contents/SharedSupport/bin/subl'
-alias killchrometabs="ps ux | grep '[C]hrome Helper --type=renderer' | grep -v extension-process | tr -s ' ' | cut -d ' ' -f2 | xargs kill"
-alias stfu="osascript -e 'set volume output muted true'"
 alias whois="whois -h whois-servers.net"
+
+# OSX Specific
+if [[ "$OSTYPE" =~ ^darwin ]]; then
+  alias dropbox2='HOME=~/Personal/DropBox /Applications/Dropbox.app/Contents/MacOS/Dropbox'
+  alias sublime='/Applications/Sublime Text 2.app/Contents/SharedSupport/bin/subl'
+  alias killchrometabs="ps ux | grep '[C]hrome Helper --type=renderer' | grep -v extension-process | tr -s ' ' | cut -d ' ' -f2 | xargs kill"
+  alias stfu="osascript -e 'set volume output muted true'"
+  alias dnsflush="dscacheutil -flushcache && killall -HUP mDNSResponder"
+  alias fuckdate='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup; npm update npm -g; npm update -g; sudo gem update'
+fi
 
 # Hipster Shizzle
 alias startpg9='pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start'
@@ -46,8 +59,6 @@ alias weekno='date +%V'
 alias randpass="openssl rand -base64 12"
 alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
 alias fufinder="find . -type f -name '.DS_Store' -ls -delete"
-alias dnsflush="dscacheutil -flushcache && killall -HUP mDNSResponder"
-alias fuckdate='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup; npm update npm -g; npm update -g; sudo gem update'
 
 # DVCS lazyness
 alias gs='git status'
@@ -67,6 +78,8 @@ alias get-current-color="if [[ \$(get-current-branch) == \"master\" ]] ; then ec
 
 # common command adjustments/common typos/general laziness
 alias rm='rm -i'
+alias tlf="tail -f"
+alias mkdir='mkdir -p'
 alias cd..='cd ..'
 alias cd.='cd `pwd -LP`'
 alias ..="cd .."
@@ -140,7 +153,7 @@ LS_COLORS="$LS_COLORS\
 export LS_COLORS
 
 # I r english, canhaz GB locale kthx
-[ -z "$LANG" ] && export LANG="en_GB.UTF8"
+[ -z "$LANG" ] && export LC_ALL="en_GB.UTF8" && export LANG="en_GB"
 
 # Show me directory contents when I change directories
 cd() {
