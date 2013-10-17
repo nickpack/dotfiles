@@ -258,6 +258,7 @@ restart_osx_shizzle() {
 }
 
 install_packages_from_manifest() {
+    # todo - this is messy as, sort it out.
     echo "Installing ${1} packages from ${2}..."
     while read line
     do
@@ -265,6 +266,8 @@ install_packages_from_manifest() {
             $1 install -g  "$line";
         elif [[ "$1" == "cask" ]]; then
             brew cask install $line;
+        elif [[ "$1" == "cpan" ]]; then
+            sudo $1 install "$line"
         else
             $1 install  "$line";
         fi
@@ -302,8 +305,9 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
     echo "Finished fruity packages and settings...";
 fi
 
-echo "Installing ruby and node packages...";
+echo "Installing ruby, perl and node packages...";
 install_packages_from_manifest "gem" "rubygems";
 install_packages_from_manifest "npm" "nodeglobpackages";
+install_packages_from_manifest "cpan" "cpanpackages";
 
 echo "[DONE] Shizzle is set up. Some of this requires a logout/restart to take effect.";
