@@ -10,7 +10,7 @@ install_dotfiles() {
     echo "Installing dotfiles..."
     for dotshizzle in ${DOTFILES[@]}
     do
-        cp -fv ./${dotshizzle} ~/.${dotshizzle}
+        cp -fv ./dots/${dotshizzle} ~/.${dotshizzle}
     done
 
     # Clearly every terminal should open with darth vader
@@ -27,16 +27,13 @@ setup_vim() {
 install_most_hated_language() {
     echo "Installing the devils programming language..."
     # As much as I love to hate ruby, I need it for some things.
-    curl -L https://get.rvm.io | bash
-    rvm install 2.0.0
+    curl -sSL https://get.rvm.io | bash -s stable --ruby
 }
 
 install_homebrew() {
     echo "Installing homebrew..."
     # Brew
-    ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"
-    # Install cask for app goodness
-    brew tap phinze/homebrew-cask
+    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 }
 
 git_config() {
@@ -251,7 +248,7 @@ osx_general_app_settings() {
 restart_osx_shizzle() {
     echo "Restarting affected OSX apps..."
     for app in "Address Book" "Calendar" "Contacts" "Dashboard" "Dock" "Finder" \
-        "Mail" "Safari" "SizeUp" "SystemUIServer" "Terminal" "Transmission" \
+        "Mail" "Safari" "SizeUp" "SystemUIServer" "Transmission" \
         "Twitter" "iCal" "iTunes"; do
         killall "$app" > /dev/null 2>&1;
     done
@@ -271,7 +268,7 @@ install_packages_from_manifest() {
         else
             $1 install  "$line";
         fi
-    done < $2;
+    done < "./package_lists/$2";
     echo "Done installing ${1} packages...";
 }
 
@@ -286,11 +283,10 @@ install_dotfiles;
 
 setup_vim;
 
-install_most_hated_language;
-
 git_config;
 
 if [[ "$OSTYPE" =~ ^darwin ]]; then
+    DISTRO="OSX";
     echo "I sense something fruity...";
     install_homebrew;
     osx_general_settings;
@@ -303,11 +299,21 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
     export HOMEBREW_CASK_OPTS="--appdir=/Applications"
     install_packages_from_manifest "cask" "caskapps";
     echo "Finished fruity packages and settings...";
+else
+    DISTRO=`grep DISTRIB_ID /etc/*-release | awk -F '=' '{print $2}'`;
 fi
 
-echo "Installing ruby, perl and node packages...";
+if [ "$DISTRO" == "Ubuntu" ]; then
+    echo "Installing debs..."
+    install_packages_from_manifest "apt-get" "debpackages";
+fi
+
+install_most_hated_language;
+
+echo "Installing ruby, perl, python and node packages...";
 install_packages_from_manifest "gem" "rubygems";
 install_packages_from_manifest "npm" "nodeglobpackages";
 install_packages_from_manifest "cpan" "cpanpackages";
+install_packages_from_manifest "pip" "pythonpackages";
 
 echo "[DONE] Shizzle is set up. Some of this requires a logout/restart to take effect.";

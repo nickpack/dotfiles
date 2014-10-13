@@ -6,12 +6,7 @@ export GREP_OPTIONS="--color=auto"
 export CLICOLOR=1
 export ANDROID_SDK_ROOT='/usr/local/opt/android-sdk'
 export NODE_PATH='/usr/local/lib/node_modules'
-
-if [[ "$OSTYPE" =~ ^darwin ]]; then
-  export GOPATH="/Users/nickp666/go"
-else
-  export GOPATH="/home/nickp666/go"
-fi
+export GOPATH="$HOME/go"
 
 export PATH="$GOPATH/bin:/usr/local/bin:/usr/local/sbin:/usr/local/share/python:/usr/local/share/npm/bin:/usr/local/heroku/bin:$PATH"
 export HISTCONTROL=ignoredups:erasedups
@@ -26,7 +21,6 @@ source /usr/local/bin/virtualenvwrapper.sh
 alias projects="cd ~/Projects"
 alias personal="cd ~/Personal"
 alias oss="cd ~/Projects/OSS"
-alias whois="whois -h whois-servers.net"
 
 # OSX Specific
 if [[ "$OSTYPE" =~ ^darwin ]]; then
@@ -40,7 +34,7 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
 fi
 
 # Hipster Shizzle
-alias startpg9='pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start'
+alias startpg='pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start'
 alias startmongo='nohup mongod run --config /usr/local/etc/mongod.conf &'
 alias startredis='redis-server /usr/local/etc/redis.conf'
 alias redistogo='redis-cli -h cod.redistogo.com -p 9884 -a'

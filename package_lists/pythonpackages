@@ -1,0 +1,6 @@
+ansible
+virtualenv
+sphinx
+pylint
+pep8
+virtualenvwrapper
