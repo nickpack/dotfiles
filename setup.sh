@@ -15,6 +15,13 @@ install_dotfiles() {
 
     # Clearly every terminal should open with darth vader
     sudo cp -fv motd /etc/motd
+    source ~/.bash_profile
+}
+
+make_work_dirs() {
+    mkdir ~/Projects
+    mkdir ~/Personal
+    mkdir ~/Projects/OSS
 }
 
 setup_vim() {
@@ -27,6 +34,7 @@ setup_vim() {
 install_most_hated_language() {
     echo "Installing the devils programming language..."
     # As much as I love to hate ruby, I need it for some things.
+    gpg2 --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
     curl -sSL https://get.rvm.io | bash -s stable --ruby
 }
 
@@ -265,6 +273,8 @@ install_packages_from_manifest() {
             brew cask install $line;
         elif [[ "$1" == "cpan" ]]; then
             sudo $1 install "$line"
+        elif [[ "$1" == "gem" ]]; then
+            sudo $1 install $line;
         else
             $1 install  "$line";
         fi
@@ -280,6 +290,8 @@ sudo -v;
 while true; do sudo -n true; sleep 240; kill -0 "$$" || exit; done 2>/dev/null &
 
 install_dotfiles;
+
+make_work_dirs;
 
 setup_vim;
 

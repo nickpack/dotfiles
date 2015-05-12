@@ -15,6 +15,7 @@ export HISTIGNORE=ls:ll:"ls -altr":"ls -alt":la:l:pwd:exit:mc:su:df:clear:ps:"ps
 shopt -s histappend
 shopt -s checkwinsize
 
+source ~/.profile
 source /usr/local/bin/virtualenvwrapper.sh
 
 # General stuff
