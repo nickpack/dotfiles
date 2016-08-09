@@ -1,21 +1,23 @@
 # Set some sensible defaults
+eval "$(thefuck --alias)"
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 export EDITOR='vi'
 export SVN_EDITOR='vi'
 export VISUAL='vi'
 export GREP_OPTIONS="--color=auto"
 export CLICOLOR=1
 export ANDROID_SDK_ROOT='/usr/local/opt/android-sdk'
+export ANDROID_HOME=$ANDROID_SDK_ROOT
 export NODE_PATH='/usr/local/lib/node_modules'
 export GOPATH="$HOME/go"
 
-export PATH="$GOPATH/bin:/usr/local/bin:/usr/local/sbin:/usr/local/share/python:/usr/local/share/npm/bin:/usr/local/heroku/bin:$PATH"
+export PATH="~/bin:$GOPATH/bin:/usr/local/bin:/usr/local/sbin:/usr/local/share/python:/usr/local/share/npm/bin:/usr/local/heroku/bin:$PATH"
 export HISTCONTROL=ignoredups:erasedups
 export HISTSIZE=5000
 export HISTIGNORE=ls:ll:"ls -altr":"ls -alt":la:l:pwd:exit:mc:su:df:clear:ps:"ps aux":h:history:"ls -la":du
 shopt -s histappend
 shopt -s checkwinsize
 
-source ~/.profile
 source /usr/local/bin/virtualenvwrapper.sh
 
 # General stuff
@@ -46,7 +48,6 @@ alias herokudbbackup='heroku pgbackups:capture --expire'
 alias pyenv='source venv/bin/activate'
 alias vagvm='vagrant up --provider=vmware_fusion'
 alias gw='grunt watch'
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
 # Misc
 alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
@@ -112,16 +113,6 @@ alias cd="pathed_cd"
 # Stupidly high number of file descriptors (mainly for ab)
 ulimit -n 10000
 
-# These probably arent massively useful unless you are an android/linux dev on OSX
-# I build ARM binaries a lot!
-function iDroidEnv {
-  hdiutil attach ~/iDroid/buildenv.dmg -mountpoint /Volumes/idroid;
-  cd /Volumes/idroid;
-  . build/envsetup.sh;
-  export CROSS_COMPILE='/usr/local/Cellar/android-ndk/r7/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/arm-linux-androideabi-';
-  export ARCH='arm';
-}
-
 # Remember where I was last kthx
 if [ -f ~/.cdpath ]; then
   cd "$(cat ~/.cdpath)"
@@ -152,7 +143,7 @@ export LS_COLORS
 [ -z "$LANG" ] && export LC_ALL="en_GB.UTF8" && export LANG="en_GB"
 
 # Show me directory contents when I change directories
-cd() {
+fucd() {
   if [ -n "$1" ]; then
     builtin cd "$@" && ls
   else
@@ -219,3 +210,10 @@ parse_svn_repository_root() {
 
 # Prompt with branch and colours
 export PS1="\[\033[1;30m\]\\u@\h \[\033[0;37m\]\\W:\[\033[\$(get-current-color)\]\$(parse_svn_branch)\$(get-current-branch)\\[\033[0m\]\$ "
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
+
+# Pebble SDK
+export PATH="/Users/nickp666/pebble-dev/PebbleSDK-current/bin:$PATH"
+
